@@ -1,0 +1,52 @@
+/*===== GOOGLE FONTS =====*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap');
+
+/*===== Variable ===== */
+:root {
+  --sidenav-width-desktop: 240px;
+
+  /*===== Colors ===== */
+  --primart-color: #6c5ce7;
+  --accent-color: #fd79a8;
+  --text-light: #00000040;
+  --background-light: #00000008;
+
+  /*===== Gradient =====*/
+  --text-gradient: -webkit-linear-gradient(
+    45deg,
+    var(--accent-color) -10%,
+    #ff9a8b
+  );
+
+  /*===== Font & Typography ===== */
+  --body-font: 'Poppins', sans-serif;
+
+  /*===== z index ===== */
+  --z-fixed: 100;
+}
+
+/*===== BASE =====*/
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+body {
+  position: relative;
+  font-family: var(--body-font);
+  transition: 0.5s;
+}
+
+a {
+  text-decoration: none;
+}
+
+.hero-text {
+  font-size: 32pt;
+  font-weight: 700;
+  background: var(--text-gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

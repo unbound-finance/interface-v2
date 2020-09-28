@@ -19,6 +19,12 @@ module.exports = {
       black: '#000',
       white: '#fff',
 
+      app: {
+        primary: '#6C5CE7',
+      },
+
+      inactive: '#939393',
+
       gray: {
         100: '#f7fafc',
         200: '#edf2f7',
