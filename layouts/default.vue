@@ -1,8 +1,12 @@
 <template>
-  <div class="container">
+  <div class="app">
     <side-nav />
+    <bottom-nav />
     <div class="content">
-      <div class="hero-text">Overview</div>
+      <div>
+        <app-header />
+        <nuxt />
+      </div>
     </div>
   </div>
 </template>
@@ -12,7 +16,7 @@ export default {}
 </script>
 
 <style lang="scss">
-.container {
+.app {
   padding-left: var(--sidenav-width-desktop);
 }
 
@@ -23,6 +27,9 @@ export default {}
 @media (max-width: theme('screens.md')) {
   .content {
     padding: 1rem;
+  }
+  .app {
+    padding-left: 0px;
   }
 }
 </style>

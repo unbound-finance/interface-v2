@@ -1,0 +1,16 @@
+export default {
+  contracts: {
+    dai: '0xc30d0164Fb4c013dB62E32d48f81BeD92735d97a',
+    eth: '0x6468Cb5b76200428A514125BfA5a08Cf2E4b7f9D',
+    liquidityPoolToken: '0x266480906Fd0aa3edD7fF64f466ea9684b792179',
+    unboundDai: '0x040cf9FFBF136217A3B2e5D95a31Ca0AaD70B38d',
+    liquidityLock: '0x0097551eBF9224159D4f94CA3Cb03bb7608e1C54',
+    unboundStaking: '0x339004Ea6d1F74B94A905a314B52211f0DdeC00F',
+    UNDUniswapPool: '0xd419454db08Fb089a63de2264bE150A1aDeAab22',
+    uniswapRouter: '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D',
+    valuator: '0xD7c51119Dbb17b1D798A364a326063D85c06187C',
+  },
+  chainId: 42,
+  safuFund: '0xcc729a114aa8f572971d4d85B21e661E265Df20C',
+  devFund: '0xeA6439DdaB48bF67e8e067b124Cf16d5bFBA8CDB',
+}
