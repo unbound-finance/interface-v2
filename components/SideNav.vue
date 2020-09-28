@@ -13,14 +13,13 @@
       <!-- Nav Links -->
       <div class="nav__links-container">
         <div v-for="link in navLinks" :key="link.id" class="nav__links">
-          <nuxt-link v-slot="{ href, isExactActive }" :to="link.route">
-            <a :href="href">
-              <nav-link
-                :icon="link.icon"
-                :name="link.title"
-                :is-active="isExactActive"
-              />
-            </a>
+          <nuxt-link v-slot="{ isExactActive }" :to="link.route">
+            <nav-link
+              :to="link.route"
+              :icon="link.icon"
+              :name="link.title"
+              :is-active="isExactActive"
+            />
           </nuxt-link>
         </div>
       </div>
@@ -72,7 +71,7 @@ export default {}
     width: 24px;
     height: 24px;
     border-radius: 2.4px;
-    background-color: var(--primart-color);
+    background-color: var(--primary-color);
     color: white;
     font-weight: 700;
     display: flex;
@@ -81,7 +80,7 @@ export default {}
   }
 
   &__name {
-    color: var(--primart-color);
+    color: var(--primary-color);
     font-weight: 600;
     font-size: 14pt;
   }
