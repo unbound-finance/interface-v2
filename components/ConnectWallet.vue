@@ -126,6 +126,7 @@ export default {
   },
   mounted() {
     this.identicon()
+    this.isConnected()
     this.getNetwork()
     this.reloadOnNetChange()
     this.reloadOnAccChange()
@@ -206,6 +207,19 @@ export default {
         console.log(
           'Non-Ethereum browser detected. You should consider trying MetaMask!'
         )
+      }
+    },
+
+    async isConnected() {
+      const ethereum = window.ethereum || window.web3
+      if (ethereum) {
+        const isConnected = await ethereum.isConnected()
+        if (isConnected) {
+          // get the address
+          const provider = await new ethers.providers.Web3Provider(ethereum)
+          const address = await provider.getSigner().getAddress()
+          await this.$store.commit('getProvider', address)
+        }
       }
     },
 
