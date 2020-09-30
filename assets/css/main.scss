@@ -15,7 +15,7 @@
   /*===== Gradient =====*/
   --text-gradient: -webkit-linear-gradient(
     45deg,
-    var(--accent-color) -15%,
+    var(--accent-color) -25%,
     #ff9a8b
   );
 
@@ -46,7 +46,7 @@ a {
 }
 
 .hero-text {
-  font-size: 32pt;
+  font-size: 28pt;
   font-weight: 600;
   background: var(--text-gradient);
   background-clip: text;

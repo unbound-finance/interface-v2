@@ -282,6 +282,7 @@ module.exports = {
         '"Liberation Mono"',
         '"Courier New"',
         'monospace',
+        'Inconsolata',
       ],
     },
     fontSize: {

@@ -80,6 +80,7 @@
               type="button"
               class="flex items-center w-full text-left py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
               role="menuitem"
+              @click="disconnectWallet"
             >
               Disconnect
               <span class="text-app-primary px-2">
@@ -125,7 +126,6 @@ export default {
   },
   mounted() {
     this.identicon()
-    this.connectWallet()
     this.getNetwork()
     this.reloadOnNetChange()
     this.reloadOnAccChange()
@@ -192,6 +192,7 @@ export default {
           // alert('Please allow access for the app to work')
         }
       } else if (window.web3) {
+        await window.ethereum.enable()
         window.web3 = new Web3(window.web3.currentProvider)
         const provider = await new ethers.providers.Web3Provider(
           window.ethereum
@@ -205,6 +206,12 @@ export default {
         console.log(
           'Non-Ethereum browser detected. You should consider trying MetaMask!'
         )
+      }
+    },
+
+    async disconnectWallet() {
+      if (this.$store.state.address) {
+        await this.$store.commit('getProvider', null)
       }
     },
   },
