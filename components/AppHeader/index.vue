@@ -3,7 +3,7 @@
     <!-- logo on mobile -->
     <img class="md:hidden" src="~/assets/logo.svg" width="24" alt="logo" />
     <!-- UNC Balance -->
-    <div class="unc-bal">0.0000 UNC</div>
+    <!-- <div class="unc-bal">0.0000 UNC</div> -->
     <!-- Connect Wallet Button -->
     <connect-wallet />
   </div>

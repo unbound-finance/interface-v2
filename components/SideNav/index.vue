@@ -44,10 +44,6 @@
   </div>
 </template>
 
-<script>
-export default {}
-</script>
-
 <style lang="scss">
 .sidenav {
   position: fixed;
@@ -128,12 +124,12 @@ export default {
           icon: 'EarnIcon',
           route: '/earn',
         },
-        {
-          id: 5,
-          title: 'Vote',
-          icon: 'VoteIcon',
-          route: '/vote',
-        },
+        // {
+        //   id: 5,
+        //   title: 'Vote',
+        //   icon: 'VoteIcon',
+        //   route: '/vote',
+        // },
         {
           id: 6,
           title: 'History',

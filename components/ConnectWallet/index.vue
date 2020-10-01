@@ -28,7 +28,7 @@
 
     <div
       v-if="ui.openDrawer"
-      class="origin-top-right rounded-md absolute right-0 mt-4 w-64 shadow-lg"
+      class="origin-top-right rounded-md absolute z-10 right-0 mt-4 w-64 shadow-lg"
       style="width: 20rem"
     >
       <div class="rounded-md bg-white shadow-xs">
