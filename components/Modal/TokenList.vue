@@ -9,39 +9,45 @@
       </div>
 
       <input
+        v-model="search"
         type="text"
         class="px-4 py-2 border border-gray-200 focus:border-app-primary text-sm rounded-lg appearance-none focus:outline-none"
-        placeholder="Search Liquidity Pool Token"
+        placeholder="Search token, address or exchange..."
       />
 
-      <div
-        v-for="(poolToken, index) in supportedPoolTokens"
-        :key="index"
-        class="hover:bg-gray-200 rounded-md px-2"
-        @click="selectToken(poolToken)"
-      >
+      <template v-if="searchResult.length != 0">
         <div
-          class="w-full flex items-center justify-between cursor-pointer py-1"
+          v-for="(token, index) in searchResult"
+          :key="index"
+          class="hover:bg-gray-200 rounded-md px-2"
+          @click="selectToken(token)"
         >
-          <div class="space-x-2 flex items-center">
-            <double-logo
-              :token0logo="poolToken.currencyOneLogo"
-              :token1logo="poolToken.currencyTwoLogo"
-            />
-            <div class="flex flex-col">
-              <span class="font-medium">{{ poolToken.name }}</span>
-              <span class="text-xs text-gray-500">{{
-                poolToken.exchange
-              }}</span>
+          <div
+            class="w-full flex items-center justify-between cursor-pointer py-1"
+          >
+            <div class="space-x-2 flex items-center">
+              <double-logo
+                :token0logo="token.currencyOneLogo"
+                :token1logo="token.currencyTwoLogo"
+              />
+              <div class="flex flex-col">
+                <span class="font-medium">{{ token.name }}</span>
+                <span class="text-xs text-gray-500">{{ token.exchange }}</span>
+              </div>
+            </div>
+            <div>
+              <span class="text-gray-800 font-bold font-mono">
+                {{ token.balance || 0 }}
+              </span>
             </div>
           </div>
-          <div>
-            <span class="text-gray-800 font-bold font-mono">
-              {{ poolToken.balance || 0 }}
-            </span>
-          </div>
         </div>
-      </div>
+      </template>
+      <template v-else>
+        <div class="text-sm text-center p-4 text-gray-600">
+          Token Not found.
+        </div>
+      </template>
     </div>
   </Modal>
 </template>
@@ -65,8 +71,26 @@ export default {
   },
   data() {
     return {
+      search: '',
       supportedPoolTokens,
     }
+  },
+
+  computed: {
+    searchResult() {
+      const search = this.search.trim()
+      if (search) {
+        const regex = new RegExp(search, 'ig')
+        return this.supportedPoolTokens.filter(
+          ({ name, address, exchange }) =>
+            regex.test(name) ||
+            (search.slice(0, 2).toLowerCase() === '0x' &&
+              regex.test(address)) ||
+            regex.test(exchange)
+        )
+      }
+      return this.supportedPoolTokens
+    },
   },
 
   mounted() {
@@ -79,23 +103,15 @@ export default {
     },
 
     async getSupportedPoolTokens() {
-      let i
-      const poolTokens = []
-      for (i = 0; i < supportedPoolTokens.length; i++) {
-        const balance = await getTokenBalance(supportedPoolTokens[i].address)
-        const poolTokenObj = {
-          name: supportedPoolTokens[i].name,
-          exchange: supportedPoolTokens[i].exchange,
-          address: supportedPoolTokens[i].address,
-          llcAddress: supportedPoolTokens[i].llcAddress,
-          currencyOneLogo: supportedPoolTokens[i].currencyOneLogo,
-          currencyTwoLogo: supportedPoolTokens[i].currencyTwoLogo,
-          stablecoin: supportedPoolTokens[i].stablecoin,
-          balance: balance.toFixed,
-        }
-        poolTokens.push(poolTokenObj)
-        this.supportedPoolTokens = poolTokens
-      }
+      this.supportedPoolTokens = await Promise.all(
+        supportedPoolTokens.map(async (poolToken) => {
+          const balance = await getTokenBalance(poolToken.address)
+          return {
+            ...poolToken,
+            balance: balance.toFixed,
+          }
+        })
+      )
     },
   },
 }
