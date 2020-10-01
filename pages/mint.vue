@@ -16,7 +16,11 @@
           <i class="fas fa-long-arrow-alt-down text-app-primary text-lg"></i>
 
           <!-- Mint -->
-          <input-field v-model="UNDOutput" label="Mint" :readonly="true">
+          <input-field
+            :value="(Number(UNDOutput) && UNDOutput) || ''"
+            label="Mint"
+            :readonly="true"
+          >
             <template v-slot:append>
               <div class="flex flex-col">
                 <div class="flex items-center focus:outline-none">
@@ -59,15 +63,19 @@
         <table class="w-full mt-8">
           <tr class="text-sm font-mono font-medium">
             <td class="px-4 py-1">Price Per LP Token</td>
-            <td class="px-4 py-1 text-right">0 DAI</td>
+            <td class="px-4 py-1 text-right">{{ LPTPrice }} DAI</td>
           </tr>
           <tr class="text-sm font-mono font-medium">
             <td class="px-4 py-1">Minting Fees</td>
-            <td class="px-4 py-1 text-right">0 DAI</td>
+            <td class="px-4 py-1 text-right">
+              {{ (parseInt(UNDOutput) * 0.25) / 100 }} UND
+            </td>
           </tr>
           <tr class="text-sm font-mono font-medium">
             <td class="px-4 py-1">Funding Rate</td>
-            <td class="px-4 py-1 text-right">50%</td>
+            <td class="px-4 py-1 text-right">
+              {{ (llc.loanRate && 100 / llc.loanRate) || '-' }}%
+            </td>
           </tr>
         </table>
         <div class="px-4 mt-4">
@@ -149,6 +157,12 @@ export default {
     },
     getActiveClass() {
       return 'bg-app-primary text-white'
+    },
+  },
+
+  watch: {
+    poolToken(a) {
+      this.getLoanRatioPerLPT(a)
     },
   },
   methods: {
@@ -238,11 +252,11 @@ export default {
             )
             // listen to mint event from UND contract
             UND.on('Mint', async () => {
-              await getTokenBalance(poolTokenAddress)
-              // this.poolToken.balance = balance.toFixed
+              const balance = await getTokenBalance(poolTokenAddress)
+              this.poolToken.balance = balance.toFixed
             })
           } catch (error) {
-            // this.ui.showAwaiting = false
+            this.ui.showAwaiting = false
             // this.ui.showConfirmation = false
             // this.ui.showRejected = true
           }

@@ -56,6 +56,7 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
+  z-index: 10;
   background: white;
   padding: 0.8rem 1rem 0.5rem 1rem;
   display: flex;

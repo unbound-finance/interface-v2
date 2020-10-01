@@ -30,6 +30,7 @@ export default {}
   }
   .app {
     padding-left: 0px;
+    padding-bottom: calc(60px + 1rem);
   }
 }
 </style>
