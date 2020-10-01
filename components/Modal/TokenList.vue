@@ -18,7 +18,7 @@
         v-for="(poolToken, index) in supportedPoolTokens"
         :key="index"
         class="hover:bg-gray-200 rounded-md px-2"
-        @click="selectToken(index)"
+        @click="selectToken(poolToken)"
       >
         <div
           class="w-full flex items-center justify-between cursor-pointer py-1"
@@ -36,7 +36,7 @@
             </div>
           </div>
           <div>
-            <span class="text-gray-800 font-medium">
+            <span class="text-gray-800 font-bold font-mono">
               {{ poolToken.balance || 0 }}
             </span>
           </div>
@@ -58,8 +58,8 @@ export default {
       type: Boolean,
       default: false,
     },
-    tokenIndex: {
-      type: Number,
+    poolToken: {
+      type: Object,
       default: null,
     },
   },
@@ -73,8 +73,8 @@ export default {
     this.getSupportedPoolTokens()
   },
   methods: {
-    selectToken(index) {
-      this.$emit('update:tokenIndex', index)
+    selectToken(poolToken) {
+      this.$emit('update:poolToken', poolToken)
       this.modal = false
     },
 

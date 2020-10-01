@@ -7,7 +7,11 @@
       <!-- Mint Section -->
       <div class="flex flex-col space-y-4 items-center justify-center mt-8">
         <!-- Supply -->
-        <input-field v-model="amount" label="Supply" />
+        <input-field
+          v-model="amount"
+          label="Supply"
+          :pool-token.sync="poolToken"
+        />
 
         <i class="fas fa-long-arrow-alt-down text-app-primary text-lg"></i>
 
@@ -51,6 +55,7 @@ export default {
         showAwaitingModal: false,
       },
       amount: '',
+      poolToken: null,
     }
   },
   methods: {},

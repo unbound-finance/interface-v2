@@ -3,10 +3,10 @@
     <div class="mint__input">
       <div class="flex items-center justify-between">
         <span class="text-sm text-gray-500">{{ label }}</span>
-        <p v-if="LPTBalance" class="text-sm text-gray-500">
+        <p v-if="poolToken" class="text-sm text-gray-500">
           Balance:
           <span class="font-mono text-gray-900 font-medium">{{
-            LPTBalance
+            poolToken.balance
           }}</span>
         </p>
         <p v-if="locked" class="text-sm text-gray-500">
@@ -60,16 +60,11 @@
         </div>
       </form>
     </div>
-    <token-list
-      v-model="ui.showTokenListModal"
-      :token-index.sync="tokenIndex"
-    />
+    <token-list v-model="ui.showTokenListModal" :pool-token.sync="poolToken" />
   </div>
 </template>
 
 <script>
-import supportedPoolTokens from '@/configs/supportedPoolTokens'
-
 export default {
   props: {
     label: {
@@ -99,14 +94,9 @@ export default {
       ui: {
         showTokenListModal: false,
       },
-      tokenIndex: null,
+      poolToken: null,
       LPTBalance: 0,
     }
-  },
-  computed: {
-    poolToken() {
-      return this.tokenIndex != null && supportedPoolTokens[this.tokenIndex]
-    },
   },
   watch: {
     value(a) {
@@ -114,6 +104,9 @@ export default {
     },
     model(a) {
       this.$emit('input', a)
+    },
+    poolToken(a) {
+      this.$emit('update:poolToken', a)
     },
   },
 }
