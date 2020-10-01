@@ -4,7 +4,7 @@
       <div class="hero-text">Overview</div>
       <div class="flex flex-col space-y-6">
         <!-- Total Locked Assets -->
-        <div class="md:mt-8 mt-4">
+        <div class="md:mt-12 mt-6">
           <div class="w-full flex items-center justify-between">
             <span class="text-xs text-gray-500">Total Locked Assets</span>
             <button
