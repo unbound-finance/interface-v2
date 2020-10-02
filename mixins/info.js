@@ -2,6 +2,7 @@ import { ethers } from 'ethers'
 import ERC20ABI from '~/configs/abi/ERC20'
 import UnboundDollarABI from '~/configs/abi/UnboundDai'
 import UnboundLLCABI from '~/configs/abi/UnboundLLCABI'
+import UniswapLPTABI from '~/configs/abi/UniswapLPTABI'
 
 import config from '~/configs/config'
 
@@ -40,4 +41,23 @@ const getLockedLPT = async (LPTAddress) => {
   return formatted
 }
 
-export { getBalanceOfToken, checkLoan, getLockedLPT }
+const getLPTPrice = async (poolToken) => {
+  const contract = await new ethers.Contract(
+    poolToken.address,
+    UniswapLPTABI,
+    signer
+  )
+  const reserve = await contract.getReserves()
+  const LPTTotalSupply = await contract.totalSupply()
+  const token0 = await contract.token0()
+
+  if (token0.toLowerCase() === poolToken.stablecoin) {
+    const totalValueInDai = reserve[0].toString() * 2
+    return (totalValueInDai / LPTTotalSupply).toFixed(4).slice(0, -1)
+  } else {
+    const totalValueInDai = reserve[1].toString() * 2
+    return (totalValueInDai / LPTTotalSupply).toFixed(4).slice(0, -1)
+  }
+}
+
+export { getBalanceOfToken, checkLoan, getLockedLPT, getLPTPrice }
