@@ -10,8 +10,9 @@
   <div v-else class="relative inline-block">
     <div>
       <button
+        type="button"
         class="flex items-center space-x-2 focus:outline-none hover:bg-gray-200 md:py-2 md:px-4 md:rounded transition ease-in-out duration-150"
-        @click="ui.openDrawer = !ui.openDrawer"
+        @click.prevent="ui.openDrawer = !ui.openDrawer"
       >
         <div v-html="avatar"></div>
         <span class="font-medium">{{
@@ -26,6 +27,7 @@
       </button>
     </div>
 
+    <!-- Drawer -->
     <div
       v-if="ui.openDrawer"
       class="origin-top-right rounded-md absolute z-10 right-0 mt-4 w-64 shadow-lg"
@@ -124,6 +126,7 @@ export default {
       return this.$store.state.address
     },
   },
+
   mounted() {
     this.identicon()
     this.isConnected()
