@@ -134,7 +134,7 @@ export default {
       ui: {
         showAwaitingModal: false,
         showTransactionSubmittedModal: false,
-        showRejectedModal: fals,
+        showRejectedModal: false,
       },
       LPTAmount: '',
       poolToken: null,
