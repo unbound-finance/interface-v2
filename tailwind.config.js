@@ -21,6 +21,7 @@ module.exports = {
 
       app: {
         primary: '#6C5CE7',
+        accent: '#fd79a8',
       },
 
       inactive: '#939393',
