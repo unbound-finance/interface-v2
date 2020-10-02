@@ -232,7 +232,6 @@ export default {
         async (error, signedData) => {
           if (error || signedData.error) {
             this.ui.showAwaitingModal = false
-            return console.error(signedData)
           }
           const signature = ethers.utils.splitSignature(signedData.result)
           const UnboundLLCContract = await new ethers.Contract(
