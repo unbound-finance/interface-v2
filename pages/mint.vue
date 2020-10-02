@@ -98,6 +98,14 @@
       </div>
 
       <AwaitingModal v-model="ui.showAwaitingModal" />
+      <TransactionSubmitted
+        v-model="ui.showTransactionSubmittedModal"
+        :hash="txLink"
+        :und="Number(UNDOutput)"
+        :lpt="LPTAmount"
+        :lpt-name="(poolToken && poolToken.name) || ''"
+      />
+      <Rejected v-model="ui.showRejectedModal" />
     </div>
   </div>
 </template>
@@ -125,6 +133,8 @@ export default {
     return {
       ui: {
         showAwaitingModal: false,
+        showTransactionSubmittedModal: false,
+        showRejectedModal: fals,
       },
       LPTAmount: '',
       poolToken: null,
@@ -134,6 +144,7 @@ export default {
         loanRate: '',
         fee: '',
       },
+      txLink: '',
     }
   },
 
@@ -240,11 +251,10 @@ export default {
             )
             // close awaiting modal
             this.ui.showAwaitingModal = false
-            // show success screen
-            this.ui.showConfirmation = false
             this.txLink = mintUND.hash
-            this.ui.showSuccess = true
-            // initiate the UND contract to detect the event so we can update the balances
+            // show success screen
+            this.ui.showTransactionSubmittedModal = true
+            // initiate the UND contract to detect the event so we can update the balances in real time
             const UND = new ethers.Contract(
               config.contracts.unboundDai,
               UnboundDaiABI,
@@ -256,9 +266,9 @@ export default {
               this.poolToken.balance = balance.toFixed
             })
           } catch (error) {
-            this.ui.showAwaiting = false
-            // this.ui.showConfirmation = false
-            // this.ui.showRejected = true
+            this.ui.showAwaitingModal = false
+            this.ui.showTransactionSubmittedModal = false
+            this.ui.showRejectedModal = true
           }
         }
       )
